@@ -6,7 +6,7 @@
 
 ### Current version
 
-<img alt='GitHub release (latest by date)' src=https://img.shields.io/github/v/release/Frezo23/Business-Tyccon?include_prereleases&style=for-the-badge>
+<img alt="GitHub release (latest by date)" src=https://img.shields.io/github/v/release/Frezo23/Business-Tyccon?include_prereleases&style=for-the-badge>
 
 ---
 
