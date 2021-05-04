@@ -31,8 +31,9 @@ satisfaction_show = str(satisfaction) + '/10'
 
 
 pygame.mixer.init()
-pygame.mixer.music.load('sound_track.mp3')
+pygame.mixer.music.load('assets/sound_track.mp3')
 pygame.mixer.music.play(loops=-1)
+pygame.mixer.music.set_volume(0.1)
 
 ### functions
 
@@ -156,12 +157,12 @@ def settings():
         if sound_on_off == True:
             sound_on_off = False
             sound_button.configure(image=sound_off_img)
-            pygame.mixer.pause()
+            pygame.mixer.music.stop()
         elif sound_on_off == False:
             sound_on_off = True
             sound_button.configure(image=sound_on_img)
-            pygame.mixer.music.load('sound_track.mp3')
             pygame.mixer.music.play(loops=-1)
+            pygame.mixer.music.set_volume(0.1)
 
     settings_button = tk.Label(root, image=settings_screen_img, borderwidth=0, highlightthickness=0)
     settings_button.place(x=450,y=300)
