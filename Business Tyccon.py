@@ -20,12 +20,19 @@ name = 'company'  ### MAX 13
 income_show = str(income) + '/Day'
 money_show = money
 money_list = []
-day = 1
-month = 1
-year = 1
+day = 10
+month = 10
+year = 2010
+sound_on_off = True
 date = str(day) + '/' + str(month) + '/' + str(year)
 satisfaction = 6
 satisfaction_show = str(satisfaction) + '/10' 
+
+
+
+pygame.mixer.init()
+pygame.mixer.music.load('sound_track.mp3')
+pygame.mixer.music.play(loops=-1)
 
 ### functions
 
@@ -41,18 +48,15 @@ def money_counter():
             money_show = money_show + str(money_list[1])
             money_show = money_show + str(money_list[2])
             money_show = money_show + 'K'
-            print('m')
         except:
             try:
                 money_list.pop(4)
                 money_show = str(money_list[0])
                 money_show = money_show + str(money_list[1])
                 money_show = money_show + 'K'
-                print('g')
             except:
                 money_show = str(money_list[0])
                 money_show = money_show + 'K'
-                print('d')
 
     elif money >= 1000000 and money <= 999999999:
         money_list = list(map(int, str(money)))
@@ -105,25 +109,71 @@ def money_counter():
             money_show = money_show + str(money_list[1])
             money_show = money_show + str(money_list[2])
             money_show = money_show + 'T'
-            print('m')
         except:
             try:
                 money_list.pop(13)
                 money_show = str(money_list[0])
                 money_show = money_show + str(money_list[1])
                 money_show = money_show + 'T'
-                print('g')
             except:
                 money_show = str(money_list[0])
                 money_show = money_show + 'T'
-                print('d')
     
     money_lbl.configure(text=money_show)
 
-    print(len(money_list))
-    print(money_list)
-    
 
+def update_all():
+    global date
+
+    money_counter()
+    date = str(day) + '/' + str(month) + '/' + str(year)
+    date_num_lbl.configure(text=date)
+
+    
+def next_day():
+    global day, month, year, date
+
+    day += 1
+
+    if day == 31:
+        month += 1
+        day = 1
+
+        if month == 13:
+            month = 1
+            year += 1
+    
+    date = str(day) + '/' + str(month) + '/' + str(year)
+    date_num_lbl.configure(text=date)
+
+    update_all()
+
+def settings():
+
+    def sound():
+        global sound_on_off
+
+        if sound_on_off == True:
+            sound_on_off = False
+            sound_button.configure(image=sound_off_img)
+            pygame.mixer.pause()
+        elif sound_on_off == False:
+            sound_on_off = True
+            sound_button.configure(image=sound_on_img)
+            pygame.mixer.music.load('sound_track.mp3')
+            pygame.mixer.music.play(loops=-1)
+
+    settings_button = tk.Label(root, image=settings_screen_img, borderwidth=0, highlightthickness=0)
+    settings_button.place(x=450,y=300)
+
+    save_button = tk.Button(root, image=save_img, borderwidth=0, highlightthickness=0, activebackground='#656565')
+    save_button.place(x=600,y=420)
+
+    load_button = tk.Button(root, image=load_img, borderwidth=0, highlightthickness=0, activebackground='#656565')
+    load_button.place(x=600,y=500)
+
+    sound_button = tk.Button(root, image=sound_on_img, borderwidth=0, highlightthickness=0, activebackground='#656565', command=sound)
+    sound_button.place(x=600,y=580)
 
 
 root = Tk()
@@ -153,6 +203,11 @@ partly_satisfied_img = PhotoImage(file='assets\\partly_satisfied.png')
 unsatisfied_img = PhotoImage(file='assets\\unsatisfied.png')
 locked_img = PhotoImage(file='assets\\locked.png')
 tasks_img = PhotoImage(file='assets\\tasks.png')
+settings_screen_img = PhotoImage(file='assets\\settings_screen.png')
+save_img = PhotoImage(file='assets\\save_game.png')
+load_img = PhotoImage(file='assets\\load.png')
+sound_on_img = PhotoImage(file='assets\\sound_on.png')
+sound_off_img = PhotoImage(file='assets\\sound_off.png')
 
 ### creating widgets
 
@@ -165,8 +220,8 @@ tab_lbl.place(x=-2,y=-2)
 income = tk.Label(root, image=inc_img, borderwidth=0, highlightthickness=0)
 income.place(x=100,y=40)
 
-money_lbl = tk.Label(root, text=money_show, bg='#3399cc', font=('AcmeFont',30), fg='white')
-money_lbl.place(x=150,y=35)
+money_lbl = tk.Label(root, text=money_show, bg='#3399cc', font=('AcmeFont',20), fg='white')
+money_lbl.place(x=150,y=45)
 
 income_lbl = tk.Label(root, image=high_income_img, borderwidth=0, highlightthickness=0)
 income_lbl.place(x=290,y=40)
@@ -174,7 +229,7 @@ income_lbl.place(x=290,y=40)
 income_lbl_show = tk.Label(root, text=income_show, bg='#3399cc', font=('AcmeFont',20), fg='white')
 income_lbl_show.place(x=340,y=48)
 
-settings_button = tk.Button(root, image=settings_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc')
+settings_button = tk.Button(root, image=settings_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc', command=settings)
 settings_button.place(x=20,y=40)
 
 company_lbl = tk.Label(root, image=company_img, borderwidth=0, highlightthickness=0)
@@ -190,19 +245,19 @@ popularity_num_lbl = tk.Label(root, text=popularity, bg='#3399cc', font=('AcmeFo
 popularity_num_lbl.place(x=600,y=45)
 
 date_lbl = tk.Label(root, image=time_img, borderwidth=0, highlightthickness=0)
-date_lbl.place(x=1670,y=40)
+date_lbl.place(x=1630,y=40)
 
 date_num_lbl = tk.Label(root, text=date, bg='#3399cc', font=('AcmeFont',20), fg='white')
-date_num_lbl.place(x=1720,y=45)
+date_num_lbl.place(x=1680,y=45)
 
-next_day_lbl = tk.Button(root, image=next_day_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc')
+next_day_lbl = tk.Button(root, image=next_day_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc',command=next_day)
 next_day_lbl.place(x=1850,y=40)
 
 customer_satisfaction_lbl = tk.Label(root, image=satisfied_img, borderwidth=0, highlightthickness=0)
-customer_satisfaction_lbl.place(x=1500,y=40)
+customer_satisfaction_lbl.place(x=1460,y=40)
 
 customer_satisfaction_num_lbl = tk.Label(root, text=satisfaction_show, bg='#3399cc', font=('AcmeFont',20), fg='white')
-customer_satisfaction_num_lbl.place(x=1550,y=45)
+customer_satisfaction_num_lbl.place(x=1510,y=45)
 
 locked_lbl = tk.Label(root, image=locked_img, borderwidth=0, highlightthickness=0)
 locked_lbl.place(x=1250,y=40)
