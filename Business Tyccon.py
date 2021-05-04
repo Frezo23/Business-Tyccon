@@ -20,6 +20,10 @@ name = 'company'  ### MAX 13
 income_show = str(income) + '/Day'
 money_show = money
 money_list = []
+day = 1
+month = 1
+year = 1
+date = str(day) + '/' + str(month) + '/' + str(year)
 
 
 ### functions
@@ -142,6 +146,7 @@ settings_img = PhotoImage(file='assets\\settings.png')
 company_img = PhotoImage(file='assets\\comp_name.png')
 popularity_img = PhotoImage(file='assets\\popularity.png')
 time_img = PhotoImage(file='assets\\time.png')
+next_day_img = PhotoImage(file='assets\\next_day.png')
 
 ### creating widgets
 
@@ -177,6 +182,15 @@ popularity_lbl.place(x=550,y=40)
 
 popularity_num_lbl = tk.Label(root, text=popularity, bg='#3399cc', font=('AcmeFont',20), fg='white')
 popularity_num_lbl.place(x=600,y=45)
+
+date_lbl = tk.Label(root, image=time_img, borderwidth=0, highlightthickness=0)
+date_lbl.place(x=1550,y=40)
+
+date_num_lbl = tk.Label(root, text=date, bg='#3399cc', font=('AcmeFont',20), fg='white')
+date_num_lbl.place(x=1600,y=45)
+
+next_day_lbl = tk.Button(root, image=next_day_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc')
+next_day_lbl.place(x=1850,y=40)
 
 money_counter()
 
