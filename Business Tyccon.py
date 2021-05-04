@@ -24,7 +24,8 @@ day = 1
 month = 1
 year = 1
 date = str(day) + '/' + str(month) + '/' + str(year)
-
+satisfaction = 6
+satisfaction_show = str(satisfaction) + '/10' 
 
 ### functions
 
@@ -147,6 +148,11 @@ company_img = PhotoImage(file='assets\\comp_name.png')
 popularity_img = PhotoImage(file='assets\\popularity.png')
 time_img = PhotoImage(file='assets\\time.png')
 next_day_img = PhotoImage(file='assets\\next_day.png')
+satisfied_img = PhotoImage(file='assets\\satisfied.png')
+partly_satisfied_img = PhotoImage(file='assets\\partly_satisfied.png')
+unsatisfied_img = PhotoImage(file='assets\\unsatisfied.png')
+locked_img = PhotoImage(file='assets\\locked.png')
+tasks_img = PhotoImage(file='assets\\tasks.png')
 
 ### creating widgets
 
@@ -184,13 +190,28 @@ popularity_num_lbl = tk.Label(root, text=popularity, bg='#3399cc', font=('AcmeFo
 popularity_num_lbl.place(x=600,y=45)
 
 date_lbl = tk.Label(root, image=time_img, borderwidth=0, highlightthickness=0)
-date_lbl.place(x=1550,y=40)
+date_lbl.place(x=1670,y=40)
 
 date_num_lbl = tk.Label(root, text=date, bg='#3399cc', font=('AcmeFont',20), fg='white')
-date_num_lbl.place(x=1600,y=45)
+date_num_lbl.place(x=1720,y=45)
 
 next_day_lbl = tk.Button(root, image=next_day_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc')
 next_day_lbl.place(x=1850,y=40)
+
+customer_satisfaction_lbl = tk.Label(root, image=satisfied_img, borderwidth=0, highlightthickness=0)
+customer_satisfaction_lbl.place(x=1500,y=40)
+
+customer_satisfaction_num_lbl = tk.Label(root, text=satisfaction_show, bg='#3399cc', font=('AcmeFont',20), fg='white')
+customer_satisfaction_num_lbl.place(x=1550,y=45)
+
+locked_lbl = tk.Label(root, image=locked_img, borderwidth=0, highlightthickness=0)
+locked_lbl.place(x=1250,y=40)
+
+locked_text_lbl = tk.Label(root, text='coming soon', bg='#3399cc', font=('AcmeFont',15), fg='white')
+locked_text_lbl.place(x=1300,y=50)
+
+tasks_lbl = tk.Button(root, image=tasks_img, borderwidth=0, highlightthickness=0, activebackground='white')
+tasks_lbl.place(x=0,y=900)
 
 money_counter()
 
