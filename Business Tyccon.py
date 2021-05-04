@@ -165,23 +165,24 @@ def settings():
             pygame.mixer.music.set_volume(0.1)
 
     settings_button = tk.Label(root, image=settings_screen_img, borderwidth=0, highlightthickness=0)
-    settings_button.place(x=450,y=300)
+    settings_button.place(x=450,y=200)
 
     save_button = tk.Button(root, image=save_img, borderwidth=0, highlightthickness=0, activebackground='#656565')
-    save_button.place(x=600,y=420)
+    save_button.place(x=600,y=320)
 
     load_button = tk.Button(root, image=load_img, borderwidth=0, highlightthickness=0, activebackground='#656565')
-    load_button.place(x=600,y=500)
+    load_button.place(x=600,y=400)
 
     sound_button = tk.Button(root, image=sound_on_img, borderwidth=0, highlightthickness=0, activebackground='#656565', command=sound)
-    sound_button.place(x=600,y=580)
+    sound_button.place(x=600,y=480)
 
 
 root = Tk()
 
 root.title("Business Tyccon v0.1")
 root.geometry('1920x1080')
-
+icon_img = PhotoImage(file='assets\\icon.png')
+root.iconphoto(True, icon_img)
 
 
 ### loading assets
