@@ -15,6 +15,7 @@ import os
 
 money = 60000
 income = 0
+popularity = 0
 name = 'company'  ### MAX 13
 income_show = str(income) + '/Day'
 money_show = money
@@ -139,6 +140,8 @@ medium_income_img = PhotoImage(file='assets\\medium_income.png')
 high_income_img = PhotoImage(file='assets\\high_income.png')
 settings_img = PhotoImage(file='assets\\settings.png')
 company_img = PhotoImage(file='assets\\comp_name.png')
+popularity_img = PhotoImage(file='assets\\popularity.png')
+time_img = PhotoImage(file='assets\\time.png')
 
 ### creating widgets
 
@@ -157,8 +160,8 @@ money_lbl.place(x=150,y=35)
 income_lbl = tk.Label(root, image=high_income_img, borderwidth=0, highlightthickness=0)
 income_lbl.place(x=290,y=40)
 
-income_lbl_show = tk.Label(root, text=income_show, bg='#3399cc', font=('AcmeFont',25), fg='white')
-income_lbl_show.place(x=340,y=45)
+income_lbl_show = tk.Label(root, text=income_show, bg='#3399cc', font=('AcmeFont',20), fg='white')
+income_lbl_show.place(x=340,y=48)
 
 settings_button = tk.Button(root, image=settings_img, borderwidth=0, highlightthickness=0, activebackground='#3399cc')
 settings_button.place(x=20,y=40)
@@ -168,6 +171,12 @@ company_lbl.place(x=810,y=40)
 
 company_name_lbl = tk.Label(root, text=name, bg='#3366cc', font=('AcmeFont',20), fg='white')
 company_name_lbl.place(x=860,y=45)
+
+popularity_lbl = tk.Label(root, image=popularity_img, borderwidth=0, highlightthickness=0)
+popularity_lbl.place(x=550,y=40)
+
+popularity_num_lbl = tk.Label(root, text=popularity, bg='#3399cc', font=('AcmeFont',20), fg='white')
+popularity_num_lbl.place(x=600,y=45)
 
 money_counter()
 
