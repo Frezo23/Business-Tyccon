@@ -3,7 +3,7 @@
 > ### Made by 
 > Dominik Wilczewski - Head designer, programmer, plot creator, originator
 
-Krzysztof Komorek - plot creator, originator
+> Krzysztof Komorek - plot creator, originator
 
 ---
 
