@@ -1,6 +1,8 @@
 ### Business-Tyccon
 
-> Made by Dominik Wilczewski
+> ### Made by 
+> Dominik Wilczewski - Head designer, programmer, plot creator, originator
+> Krzysztof Komorek - plot creator, originator
 
 ---
 
@@ -34,6 +36,8 @@ Business tyccon is a game about managing your own business with features includi
 - Visual Studio Code
 - Gimp
 - Icograms
+
+---
 
 ## License
 
