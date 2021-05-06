@@ -10,6 +10,7 @@ from PIL import ImageTk, Image
 from cryptography.fernet import Fernet
 import pygame
 import os
+import pickle
 
 
 ### variables
@@ -25,23 +26,84 @@ day = 10
 month = 10
 year = 2010
 sound_on_off = True
+sound_vol = 1
 date = str(day) + '/' + str(month) + '/' + str(year)
 satisfaction = 6
 satisfaction_show = str(satisfaction) + '/10' 
+key = ''
 
+### lists
 
+data_to_save = []
 
 pygame.mixer.init()
 pygame.mixer.music.load('assets/sound_track.mp3')
 pygame.mixer.music.play(loops=-1)
 pygame.mixer.music.set_volume(0.1)
 
+
+### check for files
+
+try:
+    f = open('data\\sec.data')
+    k = f.read()
+    key = Fernet(k)
+except:
+    k = Fernet.generate_key()
+    f = open('data\\sec.data','wb')
+    f.write(k)
+    f.close()
+print(key)
 ### functions
 
 def save_game():
-    global money, income, popularity, name, day, month, year, sound_on_off, satisfaction
+    global money, income, popularity, name, day, month, year, sound_on_off, satisfaction, data_to_save, key
 
+    try:
+        f = open('data\\user.data', 'w')
+    except:
+        f = open('data\\user.data', 'w')
 
+    encrypted = str(money)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(income)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(popularity)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(name)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(day)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(month)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(year)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(sound_on_off)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    encrypted = str(satisfaction)
+    encrypted = encrypted.encode()
+    data_to_save.append(key.encrypt(encrypted))
+
+    print(data_to_save)
+
+    for element in data_to_save:
+        f.write(str(element) + "\n")
 
 def money_counter():
     global money, money_show, money_list
@@ -157,25 +219,53 @@ def next_day():
 
 def settings():
 
+    def change_sound():
+        global sound_on_off, sound_vol
+        
+        if sound_on_off == False:
+            sound_vol = 0
+            sound_vol_button.configure(image=sound_img)
+        else:       
+            pass
+
+        if sound_vol == 0:
+            sound_vol = 1
+            sound_vol_button.configure(image=sound1_img)
+            pygame.mixer.music.set_volume(0.1)
+        elif sound_vol == 1:
+            sound_vol = 2
+            sound_vol_button.configure(image=sound2_img)
+            pygame.mixer.music.set_volume(0.3)
+        elif sound_vol == 2:
+            sound_vol = 3
+            sound_vol_button.configure(image=sound3_img)
+            pygame.mixer.music.set_volume(1)
+        elif sound_vol == 3:
+            sound_vol = 0
+            sound_vol_button.configure(image=sound_img)
+            pygame.mixer.music.set_volume(0)
     def sound():
-        global sound_on_off
+        global sound_on_off, sound_vol
 
         if sound_on_off == True:
             sound_on_off = False
             sound_button.configure(image=sound_off_img)
+            sound_vol_button.configure(image=sound_img)
             pygame.mixer.music.stop()
         elif sound_on_off == False:
             sound_on_off = True
             sound_button.configure(image=sound_on_img)
             pygame.mixer.music.play(loops=-1)
             pygame.mixer.music.set_volume(0.1)
-    
+
+
     def close_settings():
         settings_button.destroy()
         save_button.destroy()
         load_button.destroy()
         sound_button.destroy()
         close_button.destroy()
+        sound_button.destroy()
 
     settings_button = tk.Label(root, image=settings_screen_img, borderwidth=0, highlightthickness=0)
     settings_button.place(x=450,y=200)
@@ -191,6 +281,9 @@ def settings():
 
     close_button = tk.Button(root, image=close_img, borderwidth=0, highlightthickness=0, activebackground='#999999', command=close_settings)
     close_button.place(x=1370,y=220)
+
+    sound_vol_button = tk.Button(root, image=sound1_img, borderwidth=0, highlightthickness=0, activebackground='#999999', command=change_sound)
+    sound_vol_button.place(x=700,y=480)
 
 
 root = Tk()
@@ -227,6 +320,10 @@ load_img = PhotoImage(file='assets\\load.png')
 sound_on_img = PhotoImage(file='assets\\sound_on.png')
 sound_off_img = PhotoImage(file='assets\\sound_off.png')
 close_img = PhotoImage(file='assets\\close.png')
+sound_img = PhotoImage(file='assets\\sound_vol.png')
+sound1_img = PhotoImage(file='assets\\sound_vol1.png')
+sound2_img = PhotoImage(file='assets\\sound_vol2.png')
+sound3_img = PhotoImage(file='assets\\sound_vol3.png')
 
 ### creating widgets
 
@@ -288,5 +385,6 @@ tasks_lbl = tk.Button(root, image=tasks_img, borderwidth=0, highlightthickness=0
 tasks_lbl.place(x=0,y=900)
 
 money_counter()
+save_game()
 
 root.mainloop()
