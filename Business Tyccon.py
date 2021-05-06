@@ -7,6 +7,7 @@ import random
 import time
 import datetime
 from PIL import ImageTk, Image
+from cryptography.fernet import Fernet
 import pygame
 import os
 
@@ -36,6 +37,11 @@ pygame.mixer.music.play(loops=-1)
 pygame.mixer.music.set_volume(0.1)
 
 ### functions
+
+def save_game():
+    global money, income, popularity, name, day, month, year, sound_on_off, satisfaction
+
+
 
 def money_counter():
     global money, money_show, money_list
@@ -163,6 +169,13 @@ def settings():
             sound_button.configure(image=sound_on_img)
             pygame.mixer.music.play(loops=-1)
             pygame.mixer.music.set_volume(0.1)
+    
+    def close_settings():
+        settings_button.destroy()
+        save_button.destroy()
+        load_button.destroy()
+        sound_button.destroy()
+        close_button.destroy()
 
     settings_button = tk.Label(root, image=settings_screen_img, borderwidth=0, highlightthickness=0)
     settings_button.place(x=450,y=200)
@@ -175,6 +188,9 @@ def settings():
 
     sound_button = tk.Button(root, image=sound_on_img, borderwidth=0, highlightthickness=0, activebackground='#656565', command=sound)
     sound_button.place(x=600,y=480)
+
+    close_button = tk.Button(root, image=close_img, borderwidth=0, highlightthickness=0, activebackground='#999999', command=close_settings)
+    close_button.place(x=1370,y=220)
 
 
 root = Tk()
@@ -210,6 +226,7 @@ save_img = PhotoImage(file='assets\\save_game.png')
 load_img = PhotoImage(file='assets\\load.png')
 sound_on_img = PhotoImage(file='assets\\sound_on.png')
 sound_off_img = PhotoImage(file='assets\\sound_off.png')
+close_img = PhotoImage(file='assets\\close.png')
 
 ### creating widgets
 
